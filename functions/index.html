@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>PostLab — by Ben | The Director</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{--ink:#0e0e0d;--paper:#f5f2ec;--accent:#c8a96e;--adark:#a07840;--muted:#7a7670;--surf:#edeae3;--surf2:#e3e0d8;--bdr:rgba(14,14,13,0.12);--serif:"Playfair Display",Georgia,serif;--mono:"DM Mono",monospace;--sans:"DM Sans",sans-serif;--r:4px;--rl:8px;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;overflow-x:hidden;}
+.lnav{display:flex;align-items:center;justify-content:space-between;padding:1.5rem 3rem;border-bottom:1px solid var(--bdr);}
+.logo{font-family:var(--serif);font-weight:700;font-size:1.25rem;letter-spacing:-.02em;cursor:pointer;}
+.logo span{color:var(--accent);}
+.ltag{font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;}
+.lcta{background:var(--ink);color:var(--paper);border:none;padding:8px 20px;font-family:var(--sans);font-size:13px;font-weight:500;cursor:pointer;border-radius:var(--r);}
+.lcta:hover{background:var(--adark);}
+.hero{display:grid;grid-template-columns:1fr 1fr;min-height:calc(100vh - 73px);}
+.hleft{padding:5rem 3rem;display:flex;flex-direction:column;justify-content:center;border-right:1px solid var(--bdr);}
+.hright{padding:4rem 3rem;display:flex;flex-direction:column;justify-content:center;gap:1px;background:var(--surf);}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:1.5rem;display:flex;align-items:center;gap:10px;}
+.eyebrow::before{content:"";display:inline-block;width:28px;height:1px;background:var(--accent);}
+.htitle{font-family:var(--serif);font-size:clamp(2.8rem,4vw,4rem);font-weight:900;line-height:1.05;letter-spacing:-.03em;margin-bottom:1.5rem;}
+.htitle em{font-style:italic;color:var(--accent);}
+.hsub{font-size:17px;color:var(--muted);line-height:1.7;max-width:440px;margin-bottom:2.5rem;font-weight:300;}
+.hsub strong{color:var(--ink);font-weight:500;}
+.hacts{display:flex;gap:12px;align-items:center;}
+.hbtn{background:var(--ink);color:var(--paper);border:none;padding:14px 28px;font-family:var(--sans);font-size:15px;font-weight:500;cursor:pointer;border-radius:var(--r);transition:all .2s;}
+.hbtn:hover{background:var(--adark);}
+.hghost{background:transparent;color:var(--muted);border:1px solid var(--bdr);padding:14px 20px;font-family:var(--sans);font-size:14px;cursor:pointer;border-radius:var(--r);}
+.hghost:hover{color:var(--ink);}
+.feat{background:var(--paper);padding:1.5rem;border:1px solid var(--bdr);opacity:0;transform:translateY(14px);animation:fu .5s forwards;}
+.feat:nth-child(1){animation-delay:.1s}.feat:nth-child(2){animation-delay:.2s}.feat:nth-child(3){animation-delay:.3s}.feat:nth-child(4){animation-delay:.4s}.feat:nth-child(5){animation-delay:.5s}
+@keyframes fu{to{opacity:1;transform:translateY(0)}}
+.fnum{font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:.1em;margin-bottom:5px;}
+.ftitle{font-family:var(--serif);font-size:1rem;font-weight:700;margin-bottom:3px;}
+.fdesc{font-size:13px;color:var(--muted);line-height:1.5;font-weight:300;}
+.bbar{border-top:1px solid var(--bdr);padding:1rem 3rem;display:flex;align-items:center;gap:2rem;background:var(--paper);}
+.sv{font-family:var(--serif);font-size:1.4rem;font-weight:700;}
+.sl{font-size:12px;color:var(--muted);font-weight:300;}
+.sd{width:1px;height:36px;background:var(--bdr);}
+.byline{margin-left:auto;font-size:13px;color:var(--muted);font-style:italic;font-family:var(--serif);}
+#tool{display:none;flex-direction:column;min-height:100vh;}
+.tnav{display:flex;align-items:center;justify-content:space-between;padding:.9rem 2rem;border-bottom:1px solid var(--bdr);background:var(--paper);position:sticky;top:0;z-index:100;}
+.ttabs{display:flex;gap:2px;background:var(--surf);padding:3px;border-radius:var(--r);}
+.ttab{padding:6px 14px;font-size:13px;font-family:var(--sans);border:none;background:transparent;cursor:pointer;border-radius:3px;color:var(--muted);font-weight:400;transition:all .15s;white-space:nowrap;}
+.ttab.active{background:var(--paper);color:var(--ink);font-weight:500;box-shadow:0 1px 3px rgba(0,0,0,.08);}
+.vbadge{background:var(--accent);color:var(--paper);font-size:10px;padding:1px 6px;border-radius:20px;margin-left:4px;font-weight:500;}
+.bbtn{font-size:13px;color:var(--muted);background:none;border:none;cursor:pointer;font-family:var(--sans);}
+.bbtn:hover{color:var(--ink);}
+.tbody{flex:1;display:grid;grid-template-columns:320px 1fr;}
+.tsidebar{border-right:1px solid var(--bdr);padding:1.5rem;background:var(--surf);overflow-y:auto;max-height:calc(100vh - 57px);}
+.tmain{padding:2rem;overflow-y:auto;background:var(--paper);max-height:calc(100vh - 57px);}
+.field{margin-bottom:1.2rem;}
+.flabel{display:block;font-size:10px;font-family:var(--mono);letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin-bottom:5px;}
+textarea,input[type=text],select{width:100%;font-family:var(--sans);font-size:14px;color:var(--ink);background:var(--paper);border:1px solid var(--bdr);border-radius:var(--r);padding:9px 11px;transition:border-color .15s;outline:none;resize:vertical;}
+textarea:focus,input[type=text]:focus,select:focus{border-color:var(--accent);}
+textarea{line-height:1.6;}
+select{height:36px;resize:none;}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;font-family:var(--sans);font-size:13px;font-weight:500;border-radius:var(--r);cursor:pointer;border:1px solid var(--bdr);background:var(--paper);color:var(--ink);transition:all .15s;white-space:nowrap;}
+.btn:hover{background:var(--surf);}
+.btn:disabled{opacity:.4;cursor:not-allowed;}
+.btn-dark{background:var(--ink);color:var(--paper);border-color:var(--ink);}
+.btn-dark:hover{background:var(--adark);border-color:var(--adark);}
+.btn-accent{background:var(--accent);color:var(--paper);border-color:var(--accent);}
+.btn-accent:hover{background:var(--adark);}
+.btn-sm{padding:5px 11px;font-size:12px;}
+.btn-full{width:100%;justify-content:center;}
+.card{background:var(--paper);border:1px solid var(--bdr);border-radius:var(--rl);padding:1.2rem;margin-bottom:12px;}
+.card-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px;gap:8px;}
+.sec-title{font-family:var(--serif);font-size:1.4rem;font-weight:700;margin-bottom:4px;}
+.sec-sub{font-size:13px;color:var(--muted);margin-bottom:1.5rem;font-weight:300;line-height:1.5;}
+.alabel{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-family:var(--mono);margin-bottom:4px;margin-top:13px;}
+.atext{font-size:13.5px;line-height:1.65;color:var(--ink);}
+.hook-box{background:var(--surf);border-left:3px solid var(--accent);padding:10px 14px;font-size:14px;font-style:italic;color:var(--ink);border-radius:0 var(--r) var(--r) 0;margin:10px 0;line-height:1.6;font-family:var(--serif);}
+.tpl-box{background:var(--surf);border:1px dashed rgba(14,14,13,.2);border-radius:var(--r);padding:12px;font-size:13px;font-family:var(--mono);line-height:1.7;color:var(--ink);white-space:pre-wrap;}
+.gen-post{font-size:15px;line-height:1.9;color:var(--ink);white-space:pre-wrap;font-family:var(--sans);font-weight:300;background:var(--surf);border-radius:var(--r);padding:1.2rem;border-left:3px solid var(--accent);}
+.badge{display:inline-block;font-size:11px;padding:3px 9px;border-radius:20px;font-weight:500;font-family:var(--mono);}
+.bg-gold{background:#f5e9cc;color:#7a5a18;}.bg-green{background:#dff0e4;color:#2a6b3c;}.bg-blue{background:#dde9f8;color:#1e4d8c;}.bg-gray{background:var(--surf2);color:var(--muted);}
+.metric-row{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0;}
+.metric{font-size:12px;background:var(--surf);border-radius:20px;padding:3px 10px;color:var(--muted);font-family:var(--mono);}
+.metric strong{color:var(--ink);font-weight:500;}
+.tone-grid{display:flex;flex-wrap:wrap;gap:5px;margin-top:4px;}
+.tone-chip{padding:5px 13px;font-size:12px;border:1px solid var(--bdr);border-radius:20px;cursor:pointer;background:var(--paper);color:var(--muted);font-family:var(--sans);transition:all .15s;}
+.tone-chip.active{background:var(--ink);color:var(--paper);border-color:var(--ink);}
+.pain-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px;}
+.pain-chip{padding:7px 10px;border:1px solid var(--bdr);border-radius:var(--r);font-size:12px;cursor:pointer;background:var(--paper);color:var(--muted);transition:all .15s;text-align:center;font-family:var(--sans);}
+.pain-chip.active{background:var(--ink);color:var(--paper);border-color:var(--ink);}
+.pillar-tag{display:inline-flex;align-items:center;gap:4px;font-size:11px;padding:4px 10px;border-radius:20px;cursor:pointer;border:1px solid var(--bdr);transition:all .15s;font-family:var(--sans);color:var(--muted);background:var(--paper);}
+.po{background:#dde9f8;color:#1e4d8c;border-color:#b0c8ee;}.pp{background:#dff0e4;color:#2a6b3c;border-color:#a8d9b8;}.pt{background:#f5e9cc;color:#7a5a18;border-color:#e4c87a;}
+.score-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.score-item{background:var(--surf);border-radius:var(--r);padding:10px 12px;}
+.score-name{font-size:10px;color:var(--muted);font-family:var(--mono);letter-spacing:.06em;text-transform:uppercase;margin-bottom:5px;}
+.sbar-wrap{height:3px;background:var(--surf2);border-radius:2px;overflow:hidden;margin-bottom:4px;}
+.sbar{height:100%;background:var(--accent);border-radius:2px;transition:width .6s ease;}
+.sval{font-family:var(--serif);font-size:1.1rem;font-weight:700;}
+.hook-var{border:1px solid var(--bdr);border-radius:var(--r);padding:12px;margin-bottom:7px;cursor:pointer;transition:border-color .15s;background:var(--paper);}
+.hook-var:hover{border-color:var(--accent);}
+.hook-var.selected{border-color:var(--accent);border-width:2px;}
+.hv-label{font-size:10px;font-family:var(--mono);color:var(--accent);letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px;}
+.hv-text{font-size:14px;font-family:var(--serif);font-style:italic;line-height:1.5;color:var(--ink);}
+.vault-item{background:var(--paper);border:1px solid var(--bdr);border-radius:var(--rl);padding:1rem;margin-bottom:8px;cursor:pointer;transition:border-color .15s;}
+.vault-item.selected{border-color:var(--accent);border-width:2px;}
+.disc-card{background:var(--paper);border:1px solid var(--bdr);border-radius:var(--rl);padding:1.2rem;margin-bottom:12px;position:relative;}
+.disc-rank{position:absolute;top:1rem;right:1rem;font-family:var(--serif);font-size:1.8rem;font-weight:900;color:var(--surf2);line-height:1;}
+.disc-score-ring{display:inline-flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:50%;border:2px solid var(--accent);font-family:var(--serif);font-size:1rem;font-weight:700;color:var(--accent);flex-shrink:0;}
+.pattern-chip{display:inline-flex;align-items:center;gap:5px;font-size:12px;background:var(--surf);border-radius:var(--r);padding:6px 10px;margin:3px;color:var(--ink);font-family:var(--mono);}
+.pattern-chip .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0;}
+.empty-state{text-align:center;padding:3rem 1.5rem;color:var(--muted);}
+.empty-icon{font-size:2.2rem;margin-bottom:1rem;}
+.empty-title{font-family:var(--serif);font-size:1.1rem;font-weight:700;color:var(--ink);margin-bottom:6px;}
+.empty-text{font-size:13px;line-height:1.6;font-weight:300;}
+.spinner{width:14px;height:14px;border:2px solid rgba(255,255,255,.3);border-top-color:var(--paper);border-radius:50%;animation:spin .6s linear infinite;flex-shrink:0;}
+.spinner-d{border-color:var(--bdr);border-top-color:var(--ink);}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-bar{border:1px solid var(--bdr);border-radius:var(--rl);padding:1.4rem;display:flex;align-items:center;gap:12px;color:var(--muted);font-size:13px;font-weight:300;background:var(--surf);}
+.divider{border:none;border-top:1px solid var(--bdr);margin:1.2rem 0;}
+.slabel{font-size:10px;font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;display:block;}
+@media(max-width:900px){.hero{grid-template-columns:1fr;}.hright{display:none;}.tbody{grid-template-columns:1fr;}.tsidebar{border-right:none;border-bottom:1px solid var(--bdr);}.lnav,.bbar{padding:1rem 1.5rem;}.hleft{padding:3rem 1.5rem;}}
+</style>
+</head>
+<body>
+<div id="landing">
+  <nav class="lnav">
+    <div class="logo">Post<span>Lab</span></div>
+    <div class="ltag">by Ben · The Director</div>
+    <button class="lcta" onclick="enterTool()">Open the tool →</button>
+  </nav>
+  <div class="hero">
+    <div class="hleft">
+      <div class="eyebrow">Positioning over performance</div>
+      <h1 class="htitle">Stop guessing.<br/>Start writing<br/><em>posts that land.</em></h1>
+      <p class="hsub">PostLab finds what's winning in your niche, deconstructs why it works, then <strong>generates posts in your exact voice</strong> using those proven formats.</p>
+      <div class="hacts">
+        <button class="hbtn" onclick="enterTool()">Start for free</button>
+        <button class="hghost" onclick="document.getElementById('features').scrollIntoView({behavior:'smooth'})">See how it works ↓</button>
+      </div>
+    </div>
+    <div class="hright">
+      <div class="feat"><div class="fnum">00 — Discover</div><div class="ftitle">Find what's winning</div><div class="fdesc">Search by niche, topic, or creator. PostLab scans the web for high-engagement posts and surfaces the patterns automatically.</div></div>
+      <div class="feat"><div class="fnum">01 — Analyze</div><div class="ftitle">Deconstruct top posts</div><div class="fdesc">Hook type, emotional trigger, format, structure, objection arc. Every layer exposed.</div></div>
+      <div class="feat"><div class="fnum">02 — Pain map</div><div class="ftitle">Write into the audience</div><div class="fdesc">Define the exact fear or frustration your post addresses.</div></div>
+      <div class="feat"><div class="fnum">03 — Generate</div><div class="ftitle">Post in your voice</div><div class="fdesc">Three hook variants. Your tone. Your content pillar. One final post that sounds exactly like you.</div></div>
+      <div class="feat"><div class="fnum">04 — Score</div><div class="ftitle">Scroll-stop analysis</div><div class="fdesc">Five dimensions scored before you publish.</div></div>
+    </div>
+  </div>
+  <div class="bbar" id="features">
+    <div><div class="sv">5</div><div class="sl">Steps from idea to post</div></div>
+    <div class="sd"></div>
+    <div><div class="sv">3</div><div class="sl">Hook variants generated</div></div>
+    <div class="sd"></div>
+    <div><div class="sv">∞</div><div class="sl">Formats in your vault</div></div>
+    <div class="sd"></div>
+    <div><div class="sv">0</div><div class="sl">Generic posts produced</div></div>
+    <div class="byline">"Depth over dopamine."</div>
+  </div>
+</div>
+
+<div id="tool">
+  <nav class="tnav">
+    <div class="logo" onclick="backToLanding()">Post<span>Lab</span></div>
+    <div class="ttabs">
+      <button class="ttab active" onclick="switchTab('discover')" id="tt-discover">Discover</button>
+      <button class="ttab" onclick="switchTab('analyze')" id="tt-analyze">Analyze</button>
+      <button class="ttab" onclick="switchTab('generate')" id="tt-generate">Generate</button>
+      <button class="ttab" onclick="switchTab('vault')" id="tt-vault">Vault <span class="vbadge" id="vbadge">0</span></button>
+    </div>
+    <button class="bbtn" onclick="backToLanding()">← Home</button>
+  </nav>
+
+  <!-- DISCOVER -->
+  <div id="panel-discover" class="tbody">
+    <div class="tsidebar">
+      <span class="slabel">Search</span>
+      <div class="field"><label class="flabel">Niche or topic</label><input type="text" id="disc-niche" placeholder="e.g. personal branding, AI tools"/></div>
+      <div class="field"><label class="flabel">Specific creator (optional)</label><input type="text" id="disc-creator" placeholder="e.g. Justin Welsh"/></div>
+      <div class="field"><label class="flabel">Focus angle</label>
+        <select id="disc-angle">
+          <option value="top performing recent">Top performing recent posts</option>
+          <option value="viral hooks">Viral hook patterns</option>
+          <option value="contrarian takes">Contrarian takes that blew up</option>
+          <option value="storytelling posts">Story-driven posts</option>
+          <option value="framework posts">Framework & listicle posts</option>
+          <option value="personal brand positioning">Personal brand positioning</option>
+        </select>
+      </div>
+      <div class="field"><label class="flabel">Posts to surface</label>
+        <select id="disc-count"><option value="3">3 posts</option><option value="5" selected>5 posts</option></select>
+      </div>
+      <button class="btn btn-dark btn-full" id="disc-btn" onclick="discoverPosts()">Search & analyze →</button>
+      <div class="divider"></div>
+      <div style="font-size:12px;color:var(--muted);line-height:1.6;font-weight:300;">PostLab searches the web for publicly indexed LinkedIn posts, deconstructs each one, and surfaces the engagement patterns behind them.</div>
+    </div>
+    <div class="tmain">
+      <div class="sec-title">Content discovery</div>
+      <p class="sec-sub">Find what's winning in your niche right now. Save anything worth keeping to your vault.</p>
+      <div id="disc-output"><div class="empty-state"><div class="empty-icon">◎</div><div class="empty-title">Nothing discovered yet</div><div class="empty-text">Enter a niche or topic and hit Search.</div></div></div>
+    </div>
+  </div>
+
+  <!-- ANALYZE -->
+  <div id="panel-analyze" class="tbody" style="display:none;">
+    <div class="tsidebar">
+      <span class="slabel">Paste a post</span>
+      <div class="field"><label class="flabel">Post content</label><textarea id="post-input" rows="8" placeholder="Paste the full LinkedIn post here."></textarea></div>
+      <div class="field"><label class="flabel">Niche</label>
+        <select id="niche-select">
+          <option value="personal branding">Personal branding</option>
+          <option value="AI & tech">AI & tech</option>
+          <option value="content creation">Content creation</option>
+          <option value="LinkedIn growth">LinkedIn growth</option>
+          <option value="entrepreneurship">Entrepreneurship</option>
+          <option value="marketing">Marketing</option>
+          <option value="leadership">Leadership</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      <div class="field"><label class="flabel">Engagement (optional)</label><input type="text" id="engagement-input" placeholder="e.g. 3.1K likes"/></div>
+      <button class="btn btn-dark btn-full" id="analyze-btn" onclick="analyzePost()">Analyze post →</button>
+    </div>
+    <div class="tmain">
+      <div class="sec-title">Post deconstruction</div>
+      <p class="sec-sub">Paste any high-performing post. PostLab breaks down every layer so you can replicate the format, not the words.</p>
+      <div id="analysis-output"><div class="empty-state"><div class="empty-icon">◎</div><div class="empty-title">Nothing analyzed yet</div><div class="empty-text">Paste a post and hit Analyze.</div></div></div>
+    </div>
+  </div>
+
+  <!-- GENERATE -->
+  <div id="panel-generate" class="tbody" style="display:none;">
+    <div class="tsidebar">
+      <span class="slabel">1 — Audience pain</span>
+      <div class="field"><label class="flabel">Who are you writing for?</label><input type="text" id="audience-input" placeholder="e.g. Founders posting daily but not converting"/></div>
+      <div class="field"><label class="flabel">Their core frustration</label><textarea id="pain-input" rows="2" placeholder="What belief or fear is holding them back?"></textarea></div>
+      <div class="field"><label class="flabel">Quick pain tags</label>
+        <div class="pain-grid">
+          <div class="pain-chip" onclick="togglePain(this,'Invisible despite posting consistently')">Invisible despite posting</div>
+          <div class="pain-chip" onclick="togglePain(this,'Has followers but no clients')">Followers, no clients</div>
+          <div class="pain-chip" onclick="togglePain(this,'Sounds like everyone else')">Sounds generic</div>
+          <div class="pain-chip" onclick="togglePain(this,'No consistent voice or positioning')">No consistent voice</div>
+          <div class="pain-chip" onclick="togglePain(this,'Chasing reach instead of trust')">Chasing reach not trust</div>
+          <div class="pain-chip" onclick="togglePain(this,'Overthinking and under-publishing')">Overthinking posts</div>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <span class="slabel">2 — Your angle</span>
+      <div class="field"><label class="flabel">Topic & perspective</label><textarea id="topic-input" rows="3" placeholder="e.g. Most founders optimise for reach. That's exactly why they're not converting."></textarea></div>
+      <div class="divider"></div>
+      <span class="slabel">3 — Tone & pillar</span>
+      <div class="field"><label class="flabel">Tone</label>
+        <div class="tone-grid">
+          <div class="tone-chip" onclick="selectTone(this,'contrarian')">Contrarian</div>
+          <div class="tone-chip" onclick="selectTone(this,'story-driven')">Story-driven</div>
+          <div class="tone-chip" onclick="selectTone(this,'observation')">Observation</div>
+          <div class="tone-chip" onclick="selectTone(this,'listicle')">Listicle</div>
+          <div class="tone-chip" onclick="selectTone(this,'data-backed')">Data-backed</div>
+        </div>
+      </div>
+      <div class="field"><label class="flabel">Content pillar</label>
+        <div style="display:flex;gap:5px;flex-wrap:wrap;">
+          <div class="pillar-tag" onclick="selectPillar(this,'Observer')">🔭 Observer</div>
+          <div class="pillar-tag" onclick="selectPillar(this,'Producer')">⚙️ Producer</div>
+          <div class="pillar-tag" onclick="selectPillar(this,'Teacher')">📐 Teacher</div>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <span class="slabel">4 — Format from vault</span>
+      <div id="vault-format-list" style="margin-bottom:10px;"><div style="font-size:12px;color:var(--muted);font-weight:300;">No formats saved yet.</div></div>
+      <button class="btn btn-dark btn-full" id="gen-btn" onclick="generatePost()">Generate post →</button>
+    </div>
+    <div class="tmain">
+      <div class="sec-title">Post generation</div>
+      <p class="sec-sub">Three hook variants first. Pick the one that hits hardest, then score it before you publish.</p>
+      <div id="gen-output"><div class="empty-state"><div class="empty-icon">✦</div><div class="empty-title">Ready to generate</div><div class="empty-text">Fill in the pain mapping and your angle, then hit Generate.</div></div></div>
+    </div>
+  </div>
+
+  <!-- VAULT -->
+  <div id="panel-vault" class="tbody" style="display:none;">
+    <div class="tsidebar">
+      <span class="slabel">Vault stats</span>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:1rem;">
+        <div style="background:var(--surf);border-radius:var(--r);padding:10px;"><div style="font-family:var(--serif);font-size:1.6rem;font-weight:700;" id="vault-count-big">0</div><div style="font-size:11px;color:var(--muted);font-family:var(--mono);">Formats saved</div></div>
+        <div style="background:var(--surf);border-radius:var(--r);padding:10px;"><div style="font-family:var(--serif);font-size:1.6rem;font-weight:700;" id="vault-avg">—</div><div style="font-size:11px;color:var(--muted);font-family:var(--mono);">Avg score</div></div>
+      </div>
+      <div class="divider"></div>
+      <span class="slabel">Pillar distribution</span>
+      <div id="pillar-dist" style="font-size:12px;color:var(--muted);font-weight:300;line-height:1.7;">Analyze posts to see your content balance.</div>
+    </div>
+    <div class="tmain">
+      <div class="sec-title">Swipe vault</div>
+      <p class="sec-sub">Every format you've saved. Your personal content playbook.</p>
+      <div id="vault-list"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Uses Netlify function proxy — no API key exposed in browser
+const API = '/.netlify/functions/claude';
+
+let vault=[],selectedTone=null,selectedPillar=null,selectedVaultFormat=null,selectedPains=[];
+
+function enterTool(){document.getElementById('landing').style.display='none';document.getElementById('tool').style.display='flex';}
+function backToLanding(){document.getElementById('tool').style.display='none';document.getElementById('landing').style.display='block';}
+function switchTab(n){['discover','analyze','generate','vault'].forEach(t=>{document.getElementById('tt-'+t).classList.toggle('active',t===n);document.getElementById('panel-'+t).style.display=t===n?'grid':'none';});if(n==='vault')refreshVault();if(n==='generate')refreshVaultFormatList();}
+function selectTone(el,t){selectedTone=t;document.querySelectorAll('.tone-chip').forEach(c=>c.classList.remove('active'));el.classList.add('active');}
+function selectPillar(el,p){selectedPillar=p;document.querySelectorAll('.pillar-tag').forEach(t=>{t.className='pillar-tag';});if(p==='Observer')el.classList.add('po');if(p==='Producer')el.classList.add('pp');if(p==='Teacher')el.classList.add('pt');}
+function togglePain(el,p){if(selectedPains.includes(p)){selectedPains=selectedPains.filter(x=>x!==p);el.classList.remove('active');}else{selectedPains.push(p);el.classList.add('active');}}
+function updateBadge(){document.getElementById('vbadge').textContent=vault.length;}
+function saveDiscoveredPost(i){const p=window._disc?.[i];if(!p)return;if(vault.some(v=>v.hook===p.hook)){alert('Already in vault.');return;}vault.push(p);updateBadge();const b=document.getElementById('dsave-'+i);if(b){b.textContent='Saved ✓';b.disabled=true;}refreshVaultFormatList();}
+function saveAnalyzedPost(){const p=window._analysis;if(!p)return;if(vault.some(v=>v.hook===p.hook)){alert('Already in vault.');return;}vault.push(p);updateBadge();const b=document.getElementById('save-btn');if(b){b.textContent='Saved ✓';b.disabled=true;}refreshVaultFormatList();}
+function removeFromVault(i){vault.splice(i,1);updateBadge();refreshVault();}
+function refreshVaultFormatList(){const el=document.getElementById('vault-format-list');if(!vault.length){el.innerHTML='<div style="font-size:12px;color:var(--muted);font-weight:300;">No formats saved yet.</div>';return;}el.innerHTML=vault.map((v,i)=>`<div class="vault-item ${selectedVaultFormat===i?'selected':''}" onclick="selFmt(${i})"><div style="font-size:11px;font-family:var(--mono);color:var(--accent);margin-bottom:3px;">${v.format}</div><div style="font-size:12px;color:var(--muted);font-weight:300;">${v.hook_type} · ${v.emotional_trigger}</div></div>`).join('');}
+function selFmt(i){selectedVaultFormat=i;refreshVaultFormatList();}
+function refreshVault(){updateBadge();document.getElementById('vault-count-big').textContent=vault.length;if(!vault.length){document.getElementById('vault-avg').textContent='—';document.getElementById('vault-list').innerHTML=`<div class="empty-state"><div class="empty-icon">◎</div><div class="empty-title">Your vault is empty</div><div class="empty-text">Discover or analyze posts and save them.</div></div>`;document.getElementById('pillar-dist').innerHTML='Analyze posts to see your content balance.';return;}const avg=(vault.reduce((s,v)=>s+(v.swipe_score||0),0)/vault.length).toFixed(1);document.getElementById('vault-avg').textContent=avg+'/10';document.getElementById('vault-list').innerHTML=vault.map((v,i)=>`<div class="card"><div class="card-header"><div><div style="font-size:14px;font-weight:500;margin-bottom:5px;">${v.format}</div><div class="metric-row"><span class="badge bg-gold">${v.hook_type}</span><span class="badge bg-blue">${v.emotional_trigger}</span><span class="badge bg-green">${v.swipe_score}/10</span></div></div><button class="btn btn-sm" onclick="removeFromVault(${i})" style="color:var(--muted);">Remove</button></div><div class="hook-box">${v.hook}</div><div class="alabel">Why it worked</div><div class="atext" style="font-size:13px;">${v.why_it_worked||v.why_performing||''}</div></div>`).join('');const pm=vault.reduce((a,v)=>{if(v.pillar)a[v.pillar]=(a[v.pillar]||0)+1;return a;},{});document.getElementById('pillar-dist').innerHTML=Object.keys(pm).length?Object.entries(pm).map(([k,n])=>`<div style="margin-bottom:3px;"><strong style="color:var(--ink);">${k}</strong>: ${n} format${n>1?'s':''}</div>`).join(''):'No pillar tags yet.';}
+
+async function callClaude(payload){
+  const res=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+  if(!res.ok){const err=await res.text();throw new Error(`${res.status}: ${err}`);}
+  return res.json();
+}
+
+async function discoverPosts(){
+  const niche=document.getElementById('disc-niche').value.trim();
+  if(!niche){alert('Enter a niche or topic first.');return;}
+  const creator=document.getElementById('disc-creator').value.trim();
+  const angle=document.getElementById('disc-angle').value;
+  const count=parseInt(document.getElementById('disc-count').value);
+  const btn=document.getElementById('disc-btn');
+  btn.disabled=true;btn.innerHTML='<div class="spinner"></div> Searching...';
+  const steps=['Searching the web for top LinkedIn posts...','Pulling post content and context...','Analyzing hook patterns and formats...','Scoring engagement drivers...','Surfacing patterns across posts...'];
+  let si=0;
+  document.getElementById('disc-output').innerHTML=`<div class="loading-bar"><div class="spinner spinner-d"></div><span id="disc-step">${steps[0]}</span></div>`;
+  const timer=setInterval(()=>{si=Math.min(si+1,steps.length-1);const el=document.getElementById('disc-step');if(el)el.textContent=steps[si];},3500);
+  try{
+    const data=await callClaude({model:'claude-sonnet-4-5',max_tokens:4000,system:`You are a LinkedIn content intelligence analyst with web search capability. Find and analyze high-performing LinkedIn posts. Return ONLY valid JSON:\n{\n"search_summary":"2 sentences on what you found",\n"patterns":["Pattern 1","Pattern 2","Pattern 3"],\n"posts":[{"title":"Short title","creator":"Name or Unknown","hook":"Opening line(s)","hook_type":"question/bold claim/story opener/statistic/contrarian/pattern interrupt/list tease","format":"listicle/story arc/contrarian take/framework reveal/before-after/observation + insight/data reveal/myth-bust","emotional_trigger":"curiosity/validation/FOMO/aspiration/relatability/surprise/fear","why_performing":"3-4 sentences on why this is getting engagement","objection_handled":"What reader objection this pre-handles","key_lesson":"Single most transferable insight","format_template":"Reusable [PLACEHOLDER] template","swipe_score":7,"source_context":"Where/how found"}]\n}`,tools:[{type:'web_search_20250305',name:'web_search'}],messages:[{role:'user',content:`Find and analyze ${count} high-performing LinkedIn posts.\n\nNiche/Topic: ${niche}\n${creator?'Creator focus: '+creator:''}\nAngle: ${angle}\n\nSearch the web actively. Find real posts with high engagement. Return the JSON structure.`}]});
+    clearInterval(timer);
+    const raw=data.content.filter(b=>b.type==='text').map(b=>b.text||'').join('');
+    const m=raw.match(/\{[\s\S]*\}/);
+    if(!m)throw new Error('No JSON in response');
+    const result=JSON.parse(m[0]);
+    window._disc=result.posts.map(p=>({...p,niche,pillar:null}));
+    let html='';
+    if(result.patterns?.length){html+=`<div style="margin-bottom:1.5rem;"><div class="alabel" style="margin-top:0;">Patterns across top posts</div><div style="display:flex;flex-wrap:wrap;">${result.patterns.map(p=>`<div class="pattern-chip"><div class="dot"></div>${p}</div>`).join('')}</div><div style="font-size:12px;color:var(--muted);margin-top:8px;font-style:italic;">${result.search_summary}</div></div>`;}
+    result.posts.forEach((p,i)=>{const sc=p.swipe_score>=8?'bg-green':p.swipe_score>=6?'bg-gold':'bg-gray';html+=`<div class="disc-card"><div class="disc-rank">${String(i+1).padStart(2,'0')}</div><div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;"><div class="disc-score-ring">${p.swipe_score}</div><div><div style="font-size:14px;font-weight:500;">${p.title}</div><div style="font-size:12px;color:var(--muted);font-family:var(--mono);">${p.creator} · ${p.format}</div></div></div><div class="metric-row"><span class="badge bg-gold">${p.hook_type}</span><span class="badge bg-blue">${p.emotional_trigger}</span>${p.source_context?`<span class="badge bg-gray">${p.source_context}</span>`:''}</div><div class="hook-box">${p.hook}</div><div class="alabel">Why it's performing</div><div class="atext">${p.why_performing}</div><div class="alabel">Objection pre-handled</div><div class="atext">${p.objection_handled}</div><div class="alabel">Key lesson to steal</div><div style="background:#f5e9cc;border-radius:var(--r);padding:10px 12px;font-size:13px;color:#7a5a18;line-height:1.6;">${p.key_lesson}</div><div class="alabel">Reusable template</div><div class="tpl-box">${p.format_template}</div><div style="display:flex;justify-content:flex-end;margin-top:10px;"><button class="btn btn-accent btn-sm" id="dsave-${i}" onclick="saveDiscoveredPost(${i})">Save to vault →</button></div></div>`;});
+    document.getElementById('disc-output').innerHTML=html;
+  }catch(e){clearInterval(timer);document.getElementById('disc-output').innerHTML=`<div class="card" style="color:#8c1e1e;">Search failed: ${e.message}</div>`;}
+  btn.disabled=false;btn.innerHTML='Search & analyze →';
+}
+
+async function analyzePost(){
+  const postText=document.getElementById('post-input').value.trim();
+  if(!postText){alert('Paste a post first.');return;}
+  const niche=document.getElementById('niche-select').value;
+  const engagement=document.getElementById('engagement-input').value.trim();
+  const btn=document.getElementById('analyze-btn');
+  btn.disabled=true;btn.innerHTML='<div class="spinner"></div> Analyzing...';
+  document.getElementById('analysis-output').innerHTML=`<div class="loading-bar"><div class="spinner spinner-d"></div><span>Deconstructing hook mechanics and engagement psychology...</span></div>`;
+  try{
+    const data=await callClaude({model:'claude-sonnet-4-5',max_tokens:1000,system:`You are an expert LinkedIn content strategist. Return ONLY valid JSON:\n{"hook":"Exact opening line(s)","hook_type":"question/bold claim/story opener/statistic/contrarian/pattern interrupt/list tease","hook_mechanics":"2-3 sentences on WHY this hook works","format":"listicle/story arc/contrarian take/framework reveal/before-after/observation + insight/data reveal/myth-bust","structure":"2-3 sentences on post structure","emotional_trigger":"curiosity/validation/FOMO/aspiration/relatability/surprise/fear","objection_handled":"What reader objection this pre-handles","why_it_worked":"3-4 sentences on why this performed","format_template":"Reusable [PLACEHOLDER] template","swipe_score":7}`,messages:[{role:'user',content:`Analyze this LinkedIn post:\n\n---\n${postText}\n---\n\nNiche: ${niche}\n${engagement?'Engagement: '+engagement:''}\n\nReturn only valid JSON.`}]});
+    const raw=data.content.map(b=>b.text||'').join('');
+    const p=JSON.parse(raw.replace(/```json|```/g,'').trim());
+    p.niche=niche;p.engagement=engagement;
+    window._analysis=p;
+    const sc=p.swipe_score>=8?'bg-green':p.swipe_score>=6?'bg-gold':'bg-gray';
+    document.getElementById('analysis-output').innerHTML=`<div class="card"><div class="card-header"><div><div style="font-size:15px;font-weight:500;margin-bottom:5px;">${p.format}</div><div class="metric-row"><span class="badge ${sc}">Score: ${p.swipe_score}/10</span><span class="badge bg-gold">${p.hook_type}</span><span class="badge bg-blue">${p.emotional_trigger}</span></div></div><button class="btn btn-accent btn-sm" id="save-btn" onclick="saveAnalyzedPost()">Save to vault</button></div><div class="alabel" style="margin-top:0;">Hook</div><div class="hook-box">${p.hook}</div><div class="atext" style="font-size:13px;">${p.hook_mechanics}</div><div class="alabel">Structure</div><div class="atext">${p.structure}</div><div class="alabel">Objection pre-handled</div><div class="atext">${p.objection_handled}</div><div class="alabel">Why it worked</div><div class="atext">${p.why_it_worked}</div><div class="alabel">Reusable template</div><div class="tpl-box">${p.format_template}</div></div>`;
+  }catch(e){document.getElementById('analysis-output').innerHTML=`<div class="card" style="color:#8c1e1e;">Error: ${e.message}</div>`;}
+  btn.disabled=false;btn.innerHTML='Analyze post →';
+}
+
+async function generatePost(){
+  const topic=document.getElementById('topic-input').value.trim();
+  const audience=document.getElementById('audience-input').value.trim();
+  const painText=document.getElementById('pain-input').value.trim();
+  if(!topic){alert('Add your angle/topic first.');return;}
+  const allPains=[...new Set([...selectedPains,...(painText?[painText]:[])])].join('; ');
+  const fmt=selectedVaultFormat!==null?vault[selectedVaultFormat]:null;
+  const tone=selectedTone||'observation';
+  const pillar=selectedPillar||'Observer';
+  const btn=document.getElementById('gen-btn');
+  btn.disabled=true;btn.innerHTML='<div class="spinner"></div> Generating...';
+  document.getElementById('gen-output').innerHTML=`<div class="loading-bar"><div class="spinner spinner-d"></div><span>Writing three hook variants in your voice...</span></div>`;
+  try{
+    const data=await callClaude({model:'claude-sonnet-4-5',max_tokens:1500,system:`You are Ben's ghostwriter. Belgian LinkedIn strategist, ex-footballer, data analytics background. Voice: punchy, direct, line-break-heavy, observer lens. Philosophy: positioning over performance, depth over dopamine. The Director archetype. Never generic. Never corporate. Return ONLY valid JSON:\n{"hook_variants":[{"type":"contrarian","hook":"text","mechanic":"one sentence"},{"type":"curiosity","hook":"text","mechanic":"one sentence"},{"type":"pattern interrupt","hook":"text","mechanic":"one sentence"}],"full_post":"Complete post with real line breaks. No filler. CTA at end.","objection_arc":"One sentence","pillar":"${pillar}","cta_variants":["CTA 1","CTA 2"],"suggested_hook_index":0}`,messages:[{role:'user',content:`Write a LinkedIn post for Ben.\n\nTOPIC: ${topic}\nAUDIENCE: ${audience||'Founders and creators building personal brands'}\nCORE PAIN: ${allPains||'Posting without positioning — visible but not trusted'}\nTONE: ${tone}\nPILLAR: ${pillar}\n${fmt?`FORMAT:\n- Type: ${fmt.format}\n- Hook type: ${fmt.hook_type}\n- Template: ${fmt.format_template}`:''}\n\nGenerate three hook variants then write the full post.`}]});
+    const raw=data.content.map(b=>b.text||'').join('');
+    const p=JSON.parse(raw.replace(/```json|```/g,'').trim());
+    document.getElementById('gen-output').innerHTML=`<div style="margin-bottom:1.5rem;"><div class="alabel" style="margin-top:0;">Three hook variants — pick the one that hits hardest</div>${p.hook_variants.map((h,i)=>`<div class="hook-var ${i===p.suggested_hook_index?'selected':''}" onclick="selHook(this)"><div class="hv-label">${h.type}${i===p.suggested_hook_index?' · recommended':''}</div><div class="hv-text">${h.hook}</div><div style="font-size:11px;color:var(--muted);margin-top:4px;font-family:var(--mono);">${h.mechanic}</div></div>`).join('')}</div><div class="card"><div class="card-header"><div style="font-size:14px;font-weight:500;">Full post</div><div style="display:flex;gap:6px;"><span class="badge bg-gold">${p.pillar}</span><button class="btn btn-sm" onclick="copyPost()">Copy</button><button class="btn btn-accent btn-sm" id="score-btn" onclick="scorePost()">Score it →</button></div></div><div class="gen-post" id="gen-post-text">${p.full_post}</div><div class="alabel">Objection pre-handled</div><div class="atext" style="font-size:13px;">${p.objection_arc}</div><div class="alabel">CTA options</div><div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:4px;">${p.cta_variants.map(c=>`<div class="metric"><strong>${c}</strong></div>`).join('')}</div></div><div id="score-output"></div>`;
+  }catch(e){document.getElementById('gen-output').innerHTML=`<div class="card" style="color:#8c1e1e;">Error: ${e.message}</div>`;}
+  btn.disabled=false;btn.innerHTML='Generate post →';
+}
+
+function selHook(el){document.querySelectorAll('.hook-var').forEach(h=>h.classList.remove('selected'));el.classList.add('selected');}
+function copyPost(){const t=document.getElementById('gen-post-text')?.innerText;if(!t)return;navigator.clipboard.writeText(t).then(()=>{const b=event.target;b.textContent='Copied ✓';setTimeout(()=>b.textContent='Copy',2000);});}
+
+async function scorePost(){
+  const postText=document.getElementById('gen-post-text')?.innerText;if(!postText)return;
+  const btn=document.getElementById('score-btn');btn.disabled=true;btn.innerHTML='<div class="spinner"></div>';
+  document.getElementById('score-output').innerHTML=`<div class="loading-bar" style="margin-top:12px;"><div class="spinner spinner-d"></div><span>Running scroll-stop analysis...</span></div>`;
+  try{
+    const data=await callClaude({model:'claude-sonnet-4-5',max_tokens:800,system:`Score this LinkedIn post. Return ONLY valid JSON:\n{"hook_strength":{"score":8,"note":"one sentence"},"clarity":{"score":8,"note":"one sentence"},"emotional_pull":{"score":8,"note":"one sentence"},"voice_consistency":{"score":8,"note":"one sentence"},"cta_sharpness":{"score":8,"note":"one sentence"},"overall":8,"top_strength":"One sentence","sharpest_fix":"One specific actionable edit"}`,messages:[{role:'user',content:`Score this LinkedIn post (creator: punchy, direct, observation-led):\n\n${postText}\n\nReturn only valid JSON.`}]});
+    const raw=data.content.map(b=>b.text||'').join('');
+    const sc=JSON.parse(raw.replace(/```json|```/g,'').trim());
+    const dims=[{k:'hook_strength',l:'Hook strength'},{k:'clarity',l:'Clarity'},{k:'emotional_pull',l:'Emotional pull'},{k:'voice_consistency',l:'Voice consistency'},{k:'cta_sharpness',l:'CTA sharpness'}];
+    document.getElementById('score-output').innerHTML=`<div class="card" style="margin-top:12px;"><div class="card-header"><div style="font-size:14px;font-weight:500;">Scroll-stop score</div><div class="badge bg-green" style="font-size:14px;padding:5px 14px;">${sc.overall}/10</div></div><div class="score-grid">${dims.map(d=>`<div class="score-item"><div class="score-name">${d.l}</div><div class="sbar-wrap"><div class="sbar" style="width:${sc[d.k].score*10}%"></div></div><div class="sval">${sc[d.k].score}/10</div><div style="font-size:11px;color:var(--muted);margin-top:2px;line-height:1.4;">${sc[d.k].note}</div></div>`).join('')}</div><div class="divider"></div><div class="alabel">Top strength</div><div class="atext" style="font-size:13px;">${sc.top_strength}</div><div class="alabel">Sharpest fix</div><div style="background:#f5e9cc;border-radius:var(--r);padding:10px 12px;font-size:13px;color:#7a5a18;line-height:1.6;">${sc.sharpest_fix}</div></div>`;
+  }catch(e){document.getElementById('score-output').innerHTML=`<div class="card" style="color:#8c1e1e;margin-top:12px;">Error scoring.</div>`;}
+  btn.disabled=false;btn.innerHTML='Score it →';
+}
+</script>
+</body>
+</html>
